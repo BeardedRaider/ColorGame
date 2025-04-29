@@ -1,0 +1,221 @@
+:root {
+  /* Primary Theme */
+  --color-primary: #ff007f; /* Bold neon pink */
+  --color-secondary: #0078FF; /* Bright cyan */
+  --color-accent: #ffcc00; /* Warm pop of yellow-orange */
+
+  /* Text & Background */
+  --color-headings: #ffffff; /* Clean white */
+  --color-body: #dddde2; /* Soft off-white */
+  --color-body-darker: #b0b0c0; /* Subtle contrast for readability */
+
+  /* UI & Effects */
+  --color-border: #292929; /* Dark tone to keep edges sharp */
+  --border-radius: 20px; /* Slightly softened */
+  --box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Typography */
+::selection {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  line-height: 1.5;
+  color: var(--color-body);
+  background: #f8f8f8;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--color-headings);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: 6rem;
+}
+h2 {
+  font-size: 4rem;
+}
+h3 {
+  font-size: 2.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+p {
+  margin-top: 0;
+}
+
+/* Buttons */
+button {
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--color-border);
+  box-shadow: var(--box-shadow);
+  background: var(--color-primary);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+button:hover {
+  background: var(--color-secondary);
+}
+
+/* Responsive Tweaks */
+@media screen and (min-width: 1024px) {
+  body {
+    font-size: 1.8rem;
+  }
+
+  h1 {
+    font-size: 8rem;
+  }
+  h2 {
+    font-size: 4rem;
+  }
+  h3 {
+    font-size: 2.4rem;
+  }
+}
+
+/* Main Navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    color: var(--color-headings);
+    position: relative; /* For positioning dropdown */
+}
+
+.logo {
+    font-size: 1.8rem;
+    letter-spacing: 0.05em; /* Adds slight spacing between letters */
+    
+
+}
+
+/* Burger Toggler */
+.menu-toggle,
+.nav__toggler {
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    color: var(--color-headings);
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.menu-toggle:hover,
+.nav__toggler:hover {
+    opacity: 1;
+    transform: scale(1.1); /* Adds subtle feedback */
+}
+
+/* Dropdown Menu (Collapsed by Default) */
+.nav-links,
+.nav__list {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.3s ease;
+    list-style: none;
+    width: auto;
+    position: absolute;
+    top: 60px;
+    right: 0; /* Aligns directly to the right side of the screen */
+    background: rgba(20, 20, 20, 0.6); /* Subtle transparency */
+    backdrop-filter: blur(10px); /* Glass effect */
+    border-radius: 10px 0 0 10px; /* Removes border-radius from the right side */    padding: 10px; /* Keeps consistent padding inside, but no gap outside */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 0; /* Removes any margin that might cause gaps */
+}
+
+.nav-links li,
+.nav__item {
+    margin: 5px 0; /* Adjust spacing between items */    padding: 10px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nav-links a,
+.nav__item > a {
+    color: var(--color-body);
+    text-decoration: none;
+    font-size: 1.4rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav__item > a:hover {
+    color: var(--color-accent);
+}
+
+/* Active State (Expanded Dropdown) */
+.navbar.collapsible--expanded .nav-links,
+.navbar.collapsible--expanded .nav__list {
+    max-height: 200px; /* Adjust to fit content */    opacity: 1; /* Fully visible */
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+@media screen and (min-width: 768px) {
+    /* Desktop View */
+    .menu-toggle,
+    .nav__toggler {
+        display: none; /* Hide toggle on larger screens */
+    }
+
+    .nav-links,
+    .nav__list {
+        display: flex;
+        max-height: none; /* Always expanded */
+        opacity: 1;
+        flex-direction: row;
+        position: static;
+        background: none; /* Remove mobile styling */
+        width: auto;
+        box-shadow: none;
+    }
+
+    .nav-links li,
+    .nav__item {
+        margin: 0;
+        padding: 0 15px;
+        border: none;
+    }
+
+    .nav-links a,
+    .nav__item > a {
+        font-size: 2.6rem;
+    }
+
+    .logo {
+        font-size: 2.5rem;
+        font-weight: 400;
+        letter-spacing: 0.1em; /* Adds slight spacing between letters */
+    }
+}
+
+
