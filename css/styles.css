@@ -286,31 +286,26 @@ button:hover {
 }
 
 /*welcome section*/
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-    25% {
-        background-position: 50% 40%;
-    }
-    50% {
-        background-position: 100% 60%;
-    }
-    75% {
-        background-position: 50% 45%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+/* 
+  Animates the background gradient to create a smooth, wavy motion.
+  The background-position shifts horizontally and slightly vertically
+  at different keyframes to produce a dynamic, flowing effect.
+*/
+@keyframes gradientWave {
+    0%   { background-position: 0% 50%; }    /* Start at left center */
+    20%  { background-position: 20% 45%; }   /* Move right and slightly up */
+    40%  { background-position: 40% 55%; }   /* Move further right and slightly down */
+    60%  { background-position: 60% 45%; }   /* Continue right and up */
+    80%  { background-position: 80% 55%; }   /* Near the end, right and down */
+    100% { background-position: 100% 50%; }  /* End at far right center */
 }
-
 
 .welcome {
     text-align: center;
     padding: 4rem;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
-    background-size: 300% 300%;
-    animation: gradientShift 8s infinite ease-in-out;
+    background: linear-gradient(120deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+    background-size: 300% 200%;
+    animation: gradientWave 4s linear infinite alternate;
     color: var(--color-headings);
 }
 
