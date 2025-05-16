@@ -2,15 +2,15 @@
   /* Primary Theme */
   --color-primary: #ff007f; /* Bold neon pink */
   --color-secondary: #0078FF; /* Bright cyan */
-  --color-accent: #ffcc00; /* Warm pop of yellow-orange */
+  --color-accent: #e3b600; /* Warm pop of yellow-orange */
 
   /* Text & Background */
   --color-headings: #ffffff; /* Clean white */
-  --color-body: #dddde2; /* Soft off-white */
+  --color-body: #e0e0e0; /* Soft off-white */
   --color-body-darker: #b0b0c0; /* Subtle contrast for readability */
 
   /* UI & Effects */
-  --color-border: #292929; /* Dark tone to keep edges sharp */
+  --color-border: #444; /* Dark tone to keep edges sharp */
   --border-radius: 20px; /* Slightly softened */
   --box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -40,7 +40,7 @@ body {
   font-size: 2rem;
   line-height: 1.5;
   color: var(--color-body);
-  background: #f8f8f8;
+  background: #121212; /* Deep dark background */
   height: 100%; /* Added to ensure full height */
   display: flex; /* Flexbox for layout */
   flex-direction: column; /* Column layout */
@@ -110,9 +110,10 @@ button:hover {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-    color: var(--color-headings);
+    background: #1E1E1E; /* Deep gray for a sleek and modern feel */  color: var(--color-headings);
     position: relative; /* For positioning dropdown */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adds subtle depth */
+    border-bottom: 1px solid var(--color-border); /* Defines the header */
 }
 
 .logo {
@@ -225,14 +226,16 @@ button:hover {
 
 /* Footer */
 .footer {
-    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-    color: var(--color-headings);
+    background: #1E1E1E; /* Deep gray for a sleek and modern feel */    color: var(--color-headings);
     text-align: center;
     padding: 2rem;
-    position: absolute; /* Positioning at the bottom */
+    width: 100%; /* Full width */
+    position: relative; /* For positioning */
+    margin-top: auto; /* Pushes footer to the bottom */
     bottom: 0;
     left: 0;
-    width: 100%; /* Full width */
+    box-shadow: 0 4px 8px 8px rgba(0, 0, 0, 0.3); /* Adds subtle depth */
+    border-top: 1px solid var(--color-border); /* Defines the header */
 }
 
 .footer__content {
@@ -283,6 +286,8 @@ button:hover {
 /* Main content */
 .main-content {
     flex: 1; /* Pushes footer down */
+    display: flex;
+    flex-direction: column;
 }
 
 /*welcome section*/
@@ -340,5 +345,40 @@ button:hover {
     background: var(--color-secondary);
 }
 
+/* Testimonials */
+.testimonials {
+    text-align: center;
+    padding: 4rem;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    color: var(--color-headings);
+}
+
+.testimonial__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.testimonial {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.testimonial p {
+    font-size: 1.8rem;
+    color: var(--color-body);
+}
+
+.testimonial span {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1.6rem;
+    color: var(--color-body-darker);
+}
 
 
