@@ -5,15 +5,40 @@ const baseColors = [
     "lime", "maroon", "olive", "fuchsia", "aqua"
 ];
 
+// Define RGB gradients for all colors
+const rgbGradients = {
+    red: ["rgb(80, 0, 0)", "rgb(160, 0, 0)", "rgb(255, 60, 60)"],
+    blue: ["rgb(0, 0, 80)", "rgb(0, 0, 160)", "rgb(60, 60, 255)"],
+    yellow: ["rgb(102, 102, 0)", "rgb(255, 255, 0)", "rgb(255, 255, 153)"],
+    green: ["rgb(0, 80, 0)", "rgb(0, 160, 0)", "rgb(60, 255, 60)"],
+    orange: ["rgb(120, 60, 0)", "rgb(200, 100, 0)", "rgb(255, 165, 60)"],
+    purple: ["rgb(80, 0, 80)", "rgb(160, 0, 160)", "rgb(200, 60, 255)"],
+    black: ["rgb(0, 0, 0)", "rgb(50, 50, 50)", "rgb(100, 100, 100)"],
+    white: ["rgb(220, 220, 220)", "rgb(240, 240, 240)", "rgb(255, 255, 255)"],
+    gray: ["rgb(40, 40, 40)", "rgb(120, 120, 120)", "rgb(200, 200, 200)"],
+    silver: ["rgb(80, 80, 80)", "rgb(160, 160, 160)", "rgb(230, 230, 230)"],
+    teal: ["rgb(0, 80, 80)", "rgb(0, 160, 160)", "rgb(60, 255, 255)"],
+    navy: ["rgb(0, 0, 80)", "rgb(0, 0, 160)", "rgb(30, 30, 255)"],
+    lime: ["rgb(50, 150, 50)", "rgb(100, 255, 100)", "rgb(150, 255, 150)"],
+    maroon: ["rgb(80, 0, 0)", "rgb(140, 0, 0)", "rgb(180, 60, 60)"],
+    olive: ["rgb(80, 80, 0)", "rgb(140, 140, 50)", "rgb(180, 180, 100)"],
+    fuchsia: ["rgb(200, 0, 200)", "rgb(255, 60, 255)", "rgb(255, 120, 255)"],
+    aqua: ["rgb(0, 200, 200)", "rgb(60, 255, 255)", "rgb(120, 255, 255)"]
+};
+
 // Function to create base swatches
 function generateSwatches() {
     baseColors.forEach(color => {
         const swatch = document.createElement("div");
         swatch.classList.add("color-swatch");
-        swatch.style.backgroundColor = color;
         swatch.setAttribute("data-color", color);
 
-        // Click Event: Expand the swatch
+        swatch.style.background = `linear-gradient(to right, 
+            ${rgbGradients[color][0]}, 
+            ${rgbGradients[color][1]}, 
+            ${rgbGradients[color][2]}
+        )`;
+
         swatch.addEventListener("click", () => {
             expandSwatch(swatch, color);
         });
@@ -29,76 +54,24 @@ function expandSwatch(swatch, color) {
 
     swatch.classList.add("expanded");
 
-    const hue = getHue(color);
-    if (hue === "grayscale") {
-        swatch.style.background = `linear-gradient(to right, 
-            rgb(0, 0, 0), /* Black */
-            rgb(128, 128, 128), /* Medium gray */
-            rgb(255, 255, 255) /* White */
-        )`;
-    } else {
-        swatch.style.background = `linear-gradient(to right, 
-            hsl(${hue}, 100%, 20%), 
-            hsl(${hue}, 100%, 50%), 
-            hsl(${hue}, 100%, 80%)
-        )`;
-    }
-}
-
-
-// Helper Function: Get the hue value for a color
-function getHue(color) {
-    const hues = {
-        red: 0, blue: 220, yellow: 60, green: 120, orange: 30,
-        purple: 280, teal: 160, navy: 240, lime: 90, maroon: 10,
-        olive: 45, fuchsia: 300, aqua: 180
-    };
-
-    return hues[color] || (color === "black" || color === "gray" || color === "silver" || color === "white" ? "grayscale" : 0);
-}
-
-
-// Call the function to populate the grid
-generateSwatches();
-
-function expandSwatch(swatch, color) {
-    document.querySelectorAll(".expanded").forEach(el => el.classList.remove("expanded"));
-    document.querySelector(".color-grid").classList.add("expanded-mode");
-
-    swatch.classList.add("expanded");
-    swatch.style.background = `linear-gradient(to right, 
-        hsl(${getHue(color)}, 100%, 20%), 
-        hsl(${getHue(color)}, 100%, 50%), 
-        hsl(${getHue(color)}, 100%, 80%)
-    )`;
-
-    // Create and attach close button inside swatch
-    let closeButton = swatch.querySelector(".close-button");
-    if (!closeButton) {
-        closeButton = document.createElement("button");
-        closeButton.classList.add("close-button");
-        closeButton.innerText = "✖";
-        swatch.appendChild(closeButton);
-    }
-
-    closeButton.style.display = "block";
-    closeButton.addEventListener("click", (event) => {
-        event.stopPropagation(); // Prevents accidental swatch clicks
-        resetGrid();
-    });
+    const closeButton = document.querySelector(".close-button");
+    closeButton.classList.add("visible");
 }
 
 // Function to reset selection
 function resetGrid() {
-    document.querySelectorAll(".expanded").forEach(el => el.classList.remove("expanded"));
+    const expandedSwatch = document.querySelector(".expanded");
+    if (expandedSwatch) {
+        expandedSwatch.classList.remove("expanded");
+    }
+
     document.querySelector(".color-grid").classList.remove("expanded-mode");
 
-    // Remove ALL close buttons from expanded swatches
-    document.querySelectorAll(".close-button").forEach(button => {
-        button.remove();  // Fully removes it from the DOM
-    });
+    document.querySelector(".close-button").classList.remove("visible");
 }
 
+// Initialize close button
+document.querySelector(".close-button").addEventListener("click", resetGrid);
 
-
-
+// Populate the grid
+generateSwatches();

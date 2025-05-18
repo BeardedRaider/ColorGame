@@ -411,13 +411,13 @@ button:hover {
 .color-swatch.expanded {
     width: 90vw; /* Almost full screen */
     height: 200px; /* Much larger */
-    position: absolute; /* Removes it from grid flow */
+    position: absolute; /* Centers it */
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) scale(1.05); /* Centers and scales up */
+    transform: translate(-50%, -50%) scale(1.05);
     z-index: 10; /* Ensures it sits above other elements */
-    border-bottom-width: 8px; /* Thicker bottom */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Creates depth */
+    border-bottom-width: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .color-grid.expanded-mode .color-swatch:not(.expanded) {
@@ -425,12 +425,13 @@ button:hover {
     pointer-events: none; /* Prevents interaction while expanded */
 }
 
+/* Close button styles */
 .close-button {
-    display: none; /* Hidden until a swatch is expanded */
-    position: absolute; /* Anchored inside the swatch */
-    top: -45px; /* Moves it slightly above the swatch */
-    left: 90%;
-    transform: translateX(-50%);
+    display: none; /* Hidden until a swatch expands */
+    position: absolute;
+    top: 33.5rem; /* Adjusted to sit just above expanded swatch */
+    left: 93%;
+    transform: translate(-50%, -50%);
     font-size: 20px;
     background: rgb(61, 61, 61);
     border: none;
@@ -438,8 +439,11 @@ button:hover {
     cursor: pointer;
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 10; /* Ensures it sits above the swatch */
+    z-index: 50; /* Ensures it sits above the swatch */
 }
 
+.close-button.visible {
+    display: block; /* Shows the button when a swatch expands */
+}
 
 
