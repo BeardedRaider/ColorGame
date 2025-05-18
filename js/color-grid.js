@@ -27,7 +27,6 @@ const rgbGradients = {
 };
 
 // Function to create base swatches
-// ✅ Keep existing swatch generation as it was
 function generateSwatches() {
     baseColors.forEach(color => {
         const swatch = document.createElement("div");
@@ -46,26 +45,31 @@ function generateSwatches() {
     });
 }
 
-let selectedSwatch = null; // ✅ Tracks user’s chosen swatch
-// Function to expand a swatch
+let selectedSwatch = null; 
+let hasGuessed = false; // ✅ Tracks whether the user has already guessed
 
+// Function to expand a swatch
 function expandSwatch(swatch, color) {
+    if (hasGuessed) return; // ✅ Prevent further selection after first guess
+
     document.querySelectorAll(".expanded").forEach(el => el.classList.remove("expanded"));
     document.querySelector(".color-grid").classList.add("expanded-mode");
 
     swatch.classList.add("expanded");
-    selectedSwatch = color; // ✅ Store the swatch color for validation
+    selectedSwatch = color;
 
     const closeButton = document.querySelector(".close-button");
     closeButton.style.display = "block";
     closeButton.classList.add("visible");
 
-    // ✅ Show gradient prompt after selecting a swatch
     document.querySelector(".gradient-prompt").innerText = `Pick the closest match for "${currentTarget}"`;
 
     // ✅ Allow user to click inside gradient for selection
     swatch.addEventListener("click", (event) => {
-        let clickedPosition = event.offsetX / swatch.offsetWidth; // Get position % on gradient
+        if (hasGuessed) return; // ✅ Prevent multiple clicks
+
+        hasGuessed = true; // ✅ Mark user as having made their attempt
+        let clickedPosition = event.offsetX / swatch.offsetWidth;
         validateSelection(clickedPosition, color);
     });
 }
@@ -75,7 +79,7 @@ function validateSelection(clickedPosition, correctColor) {
     if (selectedSwatch !== currentTarget) {
         document.querySelector(".feedback").innerText = "❌ Wrong swatch! Try again.";
         document.querySelector(".feedback").style.display = "block";
-        return; // Stops calculation if swatch is incorrect
+        return; 
     }
 
     const actualColorIndex = baseColors.indexOf(correctColor) / baseColors.length;
@@ -86,19 +90,17 @@ function validateSelection(clickedPosition, correctColor) {
     feedback.style.color = accuracy >= 75 ? "green" : "red";
     feedback.style.display = "block";
 
-    // ✅ Add the "X" marker at the correct location
+    // ✅ Show "X" at the correct location
     let correctSwatch = document.querySelector(`.color-swatch.expanded`);
     let marker = document.createElement("div");
     marker.classList.add("correct-marker");
     marker.innerText = "X";
 
-    // Position "X" at the correct gradient location
     let markerPosition = actualColorIndex * correctSwatch.offsetWidth;
     marker.style.left = `${markerPosition}px`;
 
-    correctSwatch.appendChild(marker); // ✅ Adds the marker to the swatch
+    correctSwatch.appendChild(marker);
 }
-
 
 function createCloseButton() {
     let closeButton = document.querySelector(".close-button");
@@ -108,25 +110,24 @@ function createCloseButton() {
         closeButton.innerText = "✖";
         document.body.appendChild(closeButton);
 
-        // Ensure clicking the button properly collapses the swatch
         closeButton.addEventListener("click", resetGrid);
     }
     return closeButton;
 }
 
-
 // Function to reset selection
 function resetGrid() {
     const expandedSwatch = document.querySelector(".expanded");
     if (expandedSwatch) {
-        expandedSwatch.classList.remove("expanded"); // Collapse only the active swatch
+        expandedSwatch.classList.remove("expanded");
     }
 
     document.querySelector(".color-grid").classList.remove("expanded-mode");
 
-    // Hide the close button properly
     const closeButton = document.querySelector(".close-button");
-    closeButton.style.display = "none"; // Ensures it fully disappears
+    closeButton.style.display = "none";
+
+    hasGuessed = false; // ✅ Reset guess status after closing
 }
 
 // Initialize close button
@@ -135,7 +136,7 @@ document.querySelector(".close-button").addEventListener("click", resetGrid);
 // Populate the grid
 generateSwatches();
 
-//Generte the target color
+// Generate the target color
 function generateTargetColor() {
     let targetColor = baseColors[Math.floor(Math.random() * baseColors.length)];
     document.querySelector(".target-display").innerText = `Find: ${targetColor}`;
