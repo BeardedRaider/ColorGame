@@ -349,7 +349,7 @@ button:hover {
 .testimonials {
     text-align: center;
     padding: 4rem;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    /* background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); */
     color: var(--color-headings);
 }
 
@@ -359,15 +359,16 @@ button:hover {
     gap: 2rem;
     max-width: 800px;
     margin: 0 auto;
+    
 }
 
 .testimonial {
+    
     background: rgba(20, 20, 20, 0.6);
-    backdrop-filter: blur(8px);
-    padding: 2rem;
+    padding: 3rem;
     border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-}
+    background: linear-gradient(350deg, var(--color-primary), var(--color-secondary));
+    }
 
 .testimonial p {
     font-size: 1.8rem;
@@ -378,7 +379,10 @@ button:hover {
     display: block;
     margin-top: 1rem;
     font-size: 1.6rem;
+    font-weight: 500;
     color: var(--color-body-darker);
 }
+
+/*  */
 
 
