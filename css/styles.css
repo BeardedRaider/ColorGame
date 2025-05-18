@@ -383,4 +383,63 @@ button:hover {
     color: var(--color-body-darker);
 }
 
-/* Game Board */
+/* Game Board Swatches */
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 1.5rem;
+    max-width: 90vw;
+    margin: 2rem auto;
+    padding: 1rem;
+    overflow: hidden; /* Stops side-scrolling */
+}
+
+.color-swatch {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--color-body); /* White border */
+    border-bottom: 6px solid var(--color-body); /* Thicker bottom edge */
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    position: relative; /* Keeps it within grid */
+}
+
+.color-swatch:hover {
+    transform: scale(1.1); /* Slight hover effect */
+}
+
+.color-swatch.expanded {
+    width: 90vw; /* Almost full screen */
+    height: 200px; /* Much larger */
+    position: absolute; /* Removes it from grid flow */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1.05); /* Centers and scales up */
+    z-index: 10; /* Ensures it sits above other elements */
+    border-bottom-width: 8px; /* Thicker bottom */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Creates depth */
+}
+
+.color-grid.expanded-mode .color-swatch:not(.expanded) {
+    opacity: 0.3; /* Reduces visibility */
+    pointer-events: none; /* Prevents interaction while expanded */
+}
+
+.close-button {
+    display: none; /* Hidden until a swatch is expanded */
+    position: absolute; /* Anchored inside the swatch */
+    top: -45px; /* Moves it slightly above the swatch */
+    left: 90%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    background: rgb(61, 61, 61);
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 10; /* Ensures it sits above the swatch */
+}
+
+
+
