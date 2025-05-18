@@ -27,6 +27,7 @@ const rgbGradients = {
 };
 
 // Function to create base swatches
+// ✅ Keep existing swatch generation as it was
 function generateSwatches() {
     baseColors.forEach(color => {
         const swatch = document.createElement("div");
@@ -39,28 +40,64 @@ function generateSwatches() {
             ${rgbGradients[color][2]}
         )`;
 
-        swatch.addEventListener("click", () => {
-            expandSwatch(swatch, color);
-        });
+        swatch.addEventListener("click", () => expandSwatch(swatch, color));
 
         colorGrid.appendChild(swatch);
     });
 }
 
+let selectedSwatch = null; // ✅ Tracks user’s chosen swatch
 // Function to expand a swatch
+
 function expandSwatch(swatch, color) {
     document.querySelectorAll(".expanded").forEach(el => el.classList.remove("expanded"));
     document.querySelector(".color-grid").classList.add("expanded-mode");
 
     swatch.classList.add("expanded");
+    selectedSwatch = color; // ✅ Store the swatch color for validation
 
     const closeButton = document.querySelector(".close-button");
-    closeButton.style.display = "block"; // Forces visibility
+    closeButton.style.display = "block";
     closeButton.classList.add("visible");
 
-    console.log("Close button should now be visible");
+    // ✅ Show gradient prompt after selecting a swatch
+    document.querySelector(".gradient-prompt").innerText = `Pick the closest match for "${currentTarget}"`;
+
+    // ✅ Allow user to click inside gradient for selection
+    swatch.addEventListener("click", (event) => {
+        let clickedPosition = event.offsetX / swatch.offsetWidth; // Get position % on gradient
+        validateSelection(clickedPosition, color);
+    });
 }
 
+function validateSelection(clickedPosition, correctColor) {
+    // ✅ Ensure the user picked the right swatch before scoring
+    if (selectedSwatch !== currentTarget) {
+        document.querySelector(".feedback").innerText = "❌ Wrong swatch! Try again.";
+        document.querySelector(".feedback").style.display = "block";
+        return; // Stops calculation if swatch is incorrect
+    }
+
+    const actualColorIndex = baseColors.indexOf(correctColor) / baseColors.length;
+    let accuracy = 100 - Math.abs((clickedPosition * 100) - (actualColorIndex * 100));
+
+    let feedback = document.querySelector(".feedback");
+    feedback.innerText = `Your accuracy: ${accuracy.toFixed(2)}%.`;
+    feedback.style.color = accuracy >= 75 ? "green" : "red";
+    feedback.style.display = "block";
+
+    // ✅ Add the "X" marker at the correct location
+    let correctSwatch = document.querySelector(`.color-swatch.expanded`);
+    let marker = document.createElement("div");
+    marker.classList.add("correct-marker");
+    marker.innerText = "X";
+
+    // Position "X" at the correct gradient location
+    let markerPosition = actualColorIndex * correctSwatch.offsetWidth;
+    marker.style.left = `${markerPosition}px`;
+
+    correctSwatch.appendChild(marker); // ✅ Adds the marker to the swatch
+}
 
 
 function createCloseButton() {
@@ -92,9 +129,19 @@ function resetGrid() {
     closeButton.style.display = "none"; // Ensures it fully disappears
 }
 
-
 // Initialize close button
 document.querySelector(".close-button").addEventListener("click", resetGrid);
 
 // Populate the grid
 generateSwatches();
+
+//Generte the target color
+function generateTargetColor() {
+    let targetColor = baseColors[Math.floor(Math.random() * baseColors.length)];
+    document.querySelector(".target-display").innerText = `Find: ${targetColor}`;
+    return targetColor;
+}
+
+// ✅ Set target color **before** game starts
+let currentTarget = generateTargetColor(); 
+

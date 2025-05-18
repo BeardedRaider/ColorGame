@@ -442,10 +442,28 @@ button:hover {
     z-index: 1000;
 }
 
-
 .color-swatch.expanded{
     display: block; /* Shows when a swatch expands */
 }
+
+.color-swatch.highlight {
+    outline: 4px solid lime; /* Bright border to show correct answer */
+}
+
+.correct-marker {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    background: white;
+    padding: 4px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    pointer-events: none; /* Prevents interactions */
+}
+
 
 
 
