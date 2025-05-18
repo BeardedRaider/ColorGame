@@ -427,11 +427,11 @@ button:hover {
 
 /* Close button styles */
 .close-button {
-    display: none; /* Hidden until a swatch expands */
+    display: none;
     position: absolute;
-    top: 33.5rem; /* Adjusted to sit just above expanded swatch */
-    left: 93%;
-    transform: translate(-50%, -50%);
+    top: 32rem;
+    right: 1rem;
+    width: auto;
     font-size: 20px;
     background: rgb(61, 61, 61);
     border: none;
@@ -439,11 +439,15 @@ button:hover {
     cursor: pointer;
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 50; /* Ensures it sits above the swatch */
+    z-index: 1000;
 }
 
-.close-button.visible {
-    display: block; /* Shows the button when a swatch expands */
+
+.color-swatch.expanded{
+    display: block; /* Shows when a swatch expands */
 }
+
+
+
 
 

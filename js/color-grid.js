@@ -55,20 +55,43 @@ function expandSwatch(swatch, color) {
     swatch.classList.add("expanded");
 
     const closeButton = document.querySelector(".close-button");
+    closeButton.style.display = "block"; // Forces visibility
     closeButton.classList.add("visible");
+
+    console.log("Close button should now be visible");
 }
+
+
+
+function createCloseButton() {
+    let closeButton = document.querySelector(".close-button");
+    if (!closeButton) {
+        closeButton = document.createElement("button");
+        closeButton.classList.add("close-button");
+        closeButton.innerText = "✖";
+        document.body.appendChild(closeButton);
+
+        // Ensure clicking the button properly collapses the swatch
+        closeButton.addEventListener("click", resetGrid);
+    }
+    return closeButton;
+}
+
 
 // Function to reset selection
 function resetGrid() {
     const expandedSwatch = document.querySelector(".expanded");
     if (expandedSwatch) {
-        expandedSwatch.classList.remove("expanded");
+        expandedSwatch.classList.remove("expanded"); // Collapse only the active swatch
     }
 
     document.querySelector(".color-grid").classList.remove("expanded-mode");
 
-    document.querySelector(".close-button").classList.remove("visible");
+    // Hide the close button properly
+    const closeButton = document.querySelector(".close-button");
+    closeButton.style.display = "none"; // Ensures it fully disappears
 }
+
 
 // Initialize close button
 document.querySelector(".close-button").addEventListener("click", resetGrid);
